@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQL Server Observability Console</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>SQL Server Observability Console</h1>
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-target="metrics">Elastic Metrics</button>
+        <button class="tab" data-target="analysis">LLM Insights</button>
+        <button class="tab" data-target="live">Live Monitoring</button>
+        <button class="tab" data-target="config">Connections</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="metrics" class="panel active" role="tabpanel">
+        <h2>Elastic Metrics</h2>
+        <form id="metrics-form" class="form-grid">
+          <label>
+            Instance (optional)
+            <input type="text" id="metrics-instance" placeholder="sqlserver01" />
+          </label>
+          <label>
+            Limit
+            <input type="number" id="metrics-limit" min="1" max="500" value="25" />
+          </label>
+          <label>
+            Query
+            <select id="metrics-endpoint">
+              <option value="wait-stats">Wait Stats</option>
+              <option value="blocking">Blocking Sessions</option>
+              <option value="logs">Logs</option>
+            </select>
+          </label>
+          <button type="submit">Fetch</button>
+        </form>
+        <pre id="metrics-output" class="output"></pre>
+      </section>
+
+      <section id="analysis" class="panel" role="tabpanel">
+        <h2>Generate Insights with Ollama</h2>
+        <form id="analysis-form" class="form-grid">
+          <label>
+            Report Title
+            <input type="text" id="analysis-title" value="SQL Server Health Report" />
+          </label>
+          <label>
+            Metrics JSON
+            <textarea id="analysis-metrics" rows="6" placeholder='[{"name": "wait_time_ms", "value": 1024}]'></textarea>
+          </label>
+          <label>
+            Known Issues (optional)
+            <textarea id="analysis-issues" rows="3" placeholder="Blocking detected on tempdb"></textarea>
+          </label>
+          <button type="submit">Analyze</button>
+        </form>
+        <pre id="analysis-output" class="output"></pre>
+      </section>
+
+      <section id="live" class="panel" role="tabpanel">
+        <h2>Live SQL Monitoring</h2>
+        <form id="live-form" class="form-grid">
+          <label>
+            Endpoint
+            <select id="live-endpoint">
+              <option value="waits">Waits</option>
+              <option value="blocking">Blocking</option>
+              <option value="sessions">Sessions</option>
+            </select>
+          </label>
+          <label>
+            Limit
+            <input type="number" id="live-limit" min="1" max="500" value="25" />
+          </label>
+          <button type="submit">Fetch</button>
+        </form>
+        <pre id="live-output" class="output"></pre>
+      </section>
+
+      <section id="config" class="panel" role="tabpanel">
+        <h2>Connection Settings</h2>
+        <form id="config-form" class="config-grid">
+          <fieldset>
+            <legend>Elastic</legend>
+            <label>URL <input type="text" name="elastic.url" /></label>
+            <label>Metrics Index <input type="text" name="elastic.metrics_index" /></label>
+            <label>Logs Index <input type="text" name="elastic.logs_index" /></label>
+            <label>Username <input type="text" name="elastic.username" /></label>
+            <label>Password <input type="password" name="elastic.password" /></label>
+            <label>CA Cert Path <input type="text" name="elastic.ca_cert" /></label>
+            <label>Insecure TLS <input type="checkbox" name="elastic.insecure" /></label>
+            <label>Request Timeout <input type="number" name="elastic.request_timeout" min="1" /></label>
+          </fieldset>
+          <fieldset>
+            <legend>Ollama</legend>
+            <label>Host <input type="text" name="ollama.host" /></label>
+            <label>Model <input type="text" name="ollama.model" /></label>
+            <label>Temperature <input type="number" step="0.1" name="ollama.temperature" /></label>
+            <label>Max Tokens <input type="number" name="ollama.max_tokens" min="1" /></label>
+          </fieldset>
+          <fieldset>
+            <legend>SQL Server</legend>
+            <label>DSN <input type="text" name="sqlserver.dsn" /></label>
+            <label>Server <input type="text" name="sqlserver.server" /></label>
+            <label>Username <input type="text" name="sqlserver.username" /></label>
+            <label>Password <input type="password" name="sqlserver.password" /></label>
+            <label>Database <input type="text" name="sqlserver.database" /></label>
+            <label>Encrypt <input type="checkbox" name="sqlserver.encrypt" checked /></label>
+            <label>Trust Server Certificate <input type="checkbox" name="sqlserver.trust_server_certificate" /></label>
+          </fieldset>
+          <div class="config-actions">
+            <button type="button" id="config-refresh">Refresh</button>
+            <button type="submit">Save</button>
+          </div>
+        </form>
+        <p id="config-status" class="status"></p>
+      </section>
+    </main>
+
+    <footer>
+      <p>Telemetry sourced from Elastic and SQL Server DMVs. LLM insights powered by Ollama.</p>
+    </footer>
+
+    <script src="./assets/app.js" type="module"></script>
+  </body>
+</html>

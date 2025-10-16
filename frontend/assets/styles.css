@@ -1,0 +1,179 @@
+:root {
+  color-scheme: light dark;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.3), transparent 55%),
+    radial-gradient(circle at bottom, rgba(236, 72, 153, 0.25), transparent 60%),
+    #0f172a;
+}
+
+.app-header {
+  padding: 1.5rem 2rem 1rem;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-header h1 {
+  margin: 0 0 1rem;
+  font-size: 1.75rem;
+  letter-spacing: 0.05em;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.tab {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(30, 41, 59, 0.8);
+  color: inherit;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.tab.active,
+.tab:hover {
+  background: rgba(37, 99, 235, 0.8);
+  transform: translateY(-1px);
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.panel {
+  display: none;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.5);
+}
+
+.panel.active {
+  display: block;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.35rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.form-grid label,
+.config-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(15, 23, 42, 0.6);
+  color: inherit;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(59, 130, 246, 0.8);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.35);
+}
+
+button {
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(99, 102, 241, 0.9));
+  border: none;
+}
+
+button:hover {
+  filter: brightness(1.05);
+}
+
+.output {
+  background: rgba(2, 6, 23, 0.75);
+  border-radius: 1rem;
+  padding: 1rem;
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  white-space: pre-wrap;
+}
+
+.config-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-bottom: 1rem;
+}
+
+fieldset {
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+legend {
+  padding: 0 0.5rem;
+  font-weight: 600;
+}
+
+.config-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.status {
+  min-height: 1.5rem;
+  font-size: 0.9rem;
+}
+
+footer {
+  padding: 1rem 2rem 2rem;
+  text-align: center;
+  background: rgba(15, 23, 42, 0.85);
+  border-top: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 1rem;
+  }
+
+  main {
+    padding: 1rem;
+  }
+}
