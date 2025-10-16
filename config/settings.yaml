@@ -1,0 +1,24 @@
+elastic:
+  url: "https://elastic.example.com:9200"
+  metrics_index: "mssql-metrics-*"
+  logs_index: "mssql-logs-*"
+  username: "${ES_USER}"
+  password: "${ES_PASS}"
+  ca_cert: "${ES_CA_CERT}"
+  insecure: false
+  request_timeout: 60
+
+ollama:
+  host: "http://localhost:11434"
+  model: "llama3"
+  temperature: 0.2
+  max_tokens: 512
+
+sqlserver:
+  dsn: "mssql_monitor"
+  server: "sqlserver.example.com"
+  username: "${SQL_USER}"
+  password: "${SQL_PASSWORD}"
+  database: "master"
+  encrypt: true
+  trust_server_certificate: false
