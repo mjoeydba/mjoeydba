@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -121,10 +121,24 @@ def load_config(path: Optional[os.PathLike[str] | str] = None) -> AppConfig:
     return _parse_settings(raw)
 
 
+def config_to_dict(config: AppConfig) -> Dict[str, Any]:
+    """Convert an :class:`AppConfig` into a serialisable dictionary."""
+
+    def _strip_none(mapping: Dict[str, Any]) -> Dict[str, Any]:
+        return {k: v for k, v in mapping.items() if v is not None}
+
+    raw = asdict(config)
+    raw["elastic"] = _strip_none(raw["elastic"])
+    raw["ollama"] = _strip_none(raw["ollama"])
+    raw["sqlserver"] = _strip_none(raw["sqlserver"])
+    return raw
+
+
 __all__ = [
     "AppConfig",
     "ElasticSettings",
     "OllamaSettings",
     "SQLServerSettings",
+    "config_to_dict",
     "load_config",
 ]
